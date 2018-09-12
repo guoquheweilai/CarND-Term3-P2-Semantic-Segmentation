@@ -59,6 +59,18 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
+    # Here we will use FCN-8 architecture developed at Berkeley. (https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf)
+    # Here is the encoder architecture
+    # conv7 = Do convolution on layer 7
+    # upsampled_conv7 = Upsample conv7
+    # conv4 = Do convolution on layer 4
+    # skip4 = Connect upsampled_conv7 to conv4
+    # upsampled_skip4 = Upsample skip4
+    # conv3 = Do convolution on layer 3
+    # skip3 = Connect upsampled_skip4 to conv3
+    # upsampled_skip3 = Upsample skip3
+    # output = upsampled_skip3
+        
     con_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, 1, padding = 'same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     output = tf.layers.conv2d_transpose(con_1x1, num_classes, 4, 2, padding = 'same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     
