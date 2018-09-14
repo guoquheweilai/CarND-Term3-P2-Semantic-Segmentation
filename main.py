@@ -170,12 +170,31 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     :param learning_rate: TF Placeholder for learning rate
     """
     # TODO: Implement function
+    
+    # Run global variables initializer
+    sess.run(tf.global_variables_initializer())
+    
+    # Start training
+    print("Training...")
+    print()
+    
     for epoch in epochs:
         for image, label in get_batches_fn(batch_size):
             # Training
-            pass
+            _, loss = sess.run([train_op, cross_entropy_loss],
+                               feed_dict = {input_image: image, correct_label:label,
+                                            keep_prob: keep_prob, learning_rate: learning_rate
+                                           }
+                              )
+            
+        # Print result for record
+        print("EPOCH {} ...".format(epoch+1))
+        print("Loss = {:.3f}".format(loss))
+        print()
     
-    pass
+    # Finish training
+    print("Training finished.")
+    
 tests.test_train_nn(train_nn)
 
 
