@@ -70,11 +70,59 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     # skip3 = Connect upsampled_skip4 to conv3
     # upsampled_skip3 = Upsample skip3
     # output = upsampled_skip3
-        
-    con_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, 1, padding = 'same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
-    output = tf.layers.conv2d_transpose(con_1x1, num_classes, 4, 2, padding = 'same', kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
+
+    # Set standard deviation of weights
+    weights_stddev = 0.01
     
-    return None
+    # Set L2 regularizer of weights
+    weights_l2_regularizer = 1e-3
+    
+    # Do 1x1 convolution on vgg16 layer 7
+    conv7 = tf.layers.conv2d(vgg_layer_7_out, filters = num_classes, kernel_size = 1, strides = (1,1), padding = 'same',
+                             kernel_initializer = tf.random_normal_initializer(stddev = weights_stddev),
+                             kernel_regularizer = tf.contrib.layers.l2_regularizer(weights_l2_regularizer)
+                            )
+    
+    # Do unsample on vgg16 layer 7
+    upsampled_conv7 = tf.layers.conv2d_transpose(conv7, filters = num_classes, kernel_size = 4, strides = (2, 2), padding = 'same',
+                                                 kernel_initializer = tf.random_normal_initializer(stddev = weights_stddev),
+                                                 kernel_regularizer = tf.contrib.layers.l2_regularizer(weights_ls_regularizer)
+                                                )
+    
+    # Do 1x1 convolution on vgg16 layer 4
+    conv4 = tf.layers.conv2d(vgg_layer_4_out, filters = num_classes, kernel_size = 1, strides = (1,1), padding = 'same',
+                             kernel_initializer = tf.random_normal_initializer(stddev = weights_stddev),
+                             kernel_regularizer = tf.contrib.layers.l2_regularizer(weights_l2_regularizer)
+                            )
+    
+    # Do skip connection between unsampled_cov7 and conv4
+    skip4 = tf.add(upsampled_cov7, conv4)
+
+    # Do unsample on skip4
+    upsampled_skip4 = tf.layers.conv2d_transpose(skip4, filters = num_classes, kernel_size = 4, strides = (2, 2), padding = 'same',
+                                                 kernel_initializer = tf.random_normal_initializer(stddev = weights_stddev),
+                                                 kernel_regularizer = tf.contrib.layers.l2_regularizer(weights_ls_regularizer)
+                                                )
+    
+    # Do 1x1 convolution on vgg16 layer 3
+    conv3 = tf.layers.conv2d(vgg_layer_3_out, filters = num_classes, kernel_size = 1, strides = (1,1), padding = 'same',
+                             kernel_initializer = tf.random_normal_initializer(stddev = weights_stddev),
+                             kernel_regularizer = tf.contrib.layers.l2_regularizer(weights_l2_regularizer)
+                            )
+    
+    # Do skip connection between unsampled_skip4 and conv3
+    skip3 = tf.add(upsampled_skip4, conv3)
+
+    # Do unsample on skip3
+    upsampled_conv3 = tf.layers.conv2d_transpose(skip3, filters = num_classes, kernel_size = 16, strides = (8, 8), padding = 'same',
+                                                 kernel_initializer = tf.random_normal_initializer(stddev = weights_stddev),
+                                                 kernel_regularizer = tf.contrib.layers.l2_regularizer(weights_ls_regularizer)
+                                                )
+    
+    # Output is the unsampled_skip3
+    output = upsampled_skip3
+    
+    return output
 tests.test_layers(layers)
 
 
