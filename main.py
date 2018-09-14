@@ -88,9 +88,21 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
     :return: Tuple of (logits, train_op, cross_entropy_loss)
     """
     # TODO: Implement function
-    logits = tf.reshape(input, (-1, num_classes)) ## Remove this line???
+    # Remember the output tensor is 4D so we have to reshape it to 2D
+    # logits is now a 2D tensor where each row represents a pixel and each column a class.
+    logits = tf.reshape(nn_last_layer, (-1, num_classes)) ## Remove this line???
     
-    return None, None, None
+    # Reshape correct_label tensor to 2D
+    labels = tf.reshap(correct_label, (-1, num_classes))
+    
+    # We can just use standard cross entropy loss function
+    cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits, labels))
+    
+    # Use Adam optimizer for training
+    optimizer = tf.train.AdamOptimizer(learning_rate = learn_rate)
+    train_op = optimizer.minimize(cross_entropy_loss)
+    
+    return logits, train_op, cross_entropy_loss
 tests.test_optimize(optimize)
 
 
