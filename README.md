@@ -1,7 +1,9 @@
 # CarND-Term3-P2-Model-Semantic-Segmentation  
 ## Overview  
 In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN). You will need to extract the layers from the existing VGG-16 model and restructure the layers with several techniques like changing fully connected layer to fully convolutional layer, adding skip connections. And you will start to learn how to enhance your classifier's performance with using Intersection Over Union Metric (IOU) and inference optimization.   
-Here is the link to the [orginal repository](https://github.com/udacity/CarND-Semantic-Segmentation) provided by Udaciy. This repository contains all the code needed to complete the final project for the Model Predictive Control course in Udacity's Self-Driving Car Nanodegree.    
+Here is the link to the [orginal repository](https://github.com/udacity/CarND-Semantic-Segmentation) provided by Udaciy. This repository contains all the code needed to complete the final project for the Model Predictive Control course in Udacity's Self-Driving Car Nanodegree.  
+[Placeholder]  
+![um](./images/labeled_images/lr_1e-4_epoch_10_batch_size_5/um.gif)
 ## Prerequisites/Dependencies  
 * [Python 3](https://www.python.org/)
 * [TensorFlow](https://www.tensorflow.org/)
@@ -51,4 +53,4 @@ Yes, it does.
 #### 2.2 Does the project use reasonable hyperparameters?  
 Yes, it does.  
 #### 2.3 Does the project correctly label the road?  
-Yes, it does.      
+Yes, it does.  
