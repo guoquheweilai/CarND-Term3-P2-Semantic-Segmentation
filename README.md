@@ -2,8 +2,10 @@
 ## Overview  
 In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN). You will need to extract the layers from the existing VGG-16 model and restructure the layers with several techniques like changing fully connected layer to fully convolutional layer, adding skip connections. And you will start to learn how to enhance your classifier's performance with using Intersection Over Union Metric (IOU) and inference optimization.   
 Here is the link to the [orginal repository](https://github.com/udacity/CarND-Semantic-Segmentation) provided by Udaciy. This repository contains all the code needed to complete the project for the Model Semantic Segmentation course in Udacity's Self-Driving Car Nanodegree.  
-----
-Example: um series with training epoch = 60  
+
+---
+
+Example: `um` series with training epoch = 60  
 ![um](./images/labeled_images/lr_1e-4_epoch_60_batch_size_5/um.gif)
 ## Prerequisites/Dependencies  
 * [Python 3](https://www.python.org/)
@@ -87,6 +89,7 @@ Compare `um` series with training epoch = 10, 30, 60.
 ![um](./images/labeled_images/lr_1e-4_epoch_30_batch_size_5/um.gif)  
 `um` series with training epoch = 60  
 ![um](./images/labeled_images/lr_1e-4_epoch_60_batch_size_5/um.gif)  
+
 ---
 Compare `umm` series with training epoch = 10, 30, 60.  
 `umm` series with training epoch = 10  
@@ -95,6 +98,7 @@ Compare `umm` series with training epoch = 10, 30, 60.
 ![umm](./images/labeled_images/lr_1e-4_epoch_30_batch_size_5/umm.gif)  
 `umm` series with training epoch = 60  
 ![umm](./images/labeled_images/lr_1e-4_epoch_60_batch_size_5/umm.gif)
+
 ---
 Compare `uu` series with training epoch = 10, 30, 60.  
 `uu` series with training epoch = 10  
