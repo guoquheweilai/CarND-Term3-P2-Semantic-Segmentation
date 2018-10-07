@@ -1,9 +1,10 @@
 # CarND-Term3-P2-Model-Semantic-Segmentation  
 ## Overview  
 In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN). You will need to extract the layers from the existing VGG-16 model and restructure the layers with several techniques like changing fully connected layer to fully convolutional layer, adding skip connections. And you will start to learn how to enhance your classifier's performance with using Intersection Over Union Metric (IOU) and inference optimization.   
-Here is the link to the [orginal repository](https://github.com/udacity/CarND-Semantic-Segmentation) provided by Udaciy. This repository contains all the code needed to complete the final project for the Model Predictive Control course in Udacity's Self-Driving Car Nanodegree.  
-[Placeholder]  
-![um](./images/labeled_images/lr_1e-4_epoch_10_batch_size_5/um.gif)
+Here is the link to the [orginal repository](https://github.com/udacity/CarND-Semantic-Segmentation) provided by Udaciy. This repository contains all the code needed to complete the project for the Model Semantic Segmentation course in Udacity's Self-Driving Car Nanodegree.  
+----
+Example: um series with training epoch = 60  
+![um](./images/labeled_images/lr_1e-4_epoch_60_batch_size_5/um.gif)
 ## Prerequisites/Dependencies  
 * [Python 3](https://www.python.org/)
 * [TensorFlow](https://www.tensorflow.org/)
@@ -36,8 +37,6 @@ python main.py
 - The original FCN-8s was trained in stages. The authors later uploaded a version that was trained all at once to their GitHub repo.  The version in the GitHub repo has one important difference: The outputs of pooling layers 3 and 4 are scaled before they are fed into the 1x1 convolutions.  As a result, some students have found that the model learns much better with the scaling layers included. The model may not converge substantially faster, but may reach a higher IoU and accuracy. 
 - When adding l2-regularization, setting a regularizer in the arguments of the `tf.layers` is not enough. Regularization loss terms must be manually added to your loss function. otherwise regularization is not implemented.
 ## Project Rubric  
-(Placeholder)  
-
 ### 1. Build the Neural Network  
 #### 1.1 Does the project load the pretrained vgg model?  
 Yes, it does.  
@@ -53,4 +52,57 @@ Yes, it does.
 #### 2.2 Does the project use reasonable hyperparameters?  
 Yes, it does.  
 #### 2.3 Does the project correctly label the road?  
-Yes, it does.  
+Yes, it does.
+
+## Result Comparison  
+Test Results (Learning rate is 0.000001)
+  
+| Iteration | Epochs | Batch_size | Loss | Time/Epoch (Sec) | Comments | 
+|:----------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| 1 | 10 | 5 | 0.897 | 54.565 | No restart Jupyter Notebook|
+| 2 | 20 | 5 | 0.558 | 57.618 | No restart Jupyter Notebook|
+| 3 | 30 | 5 | 0.520 | 59.902 | No restart Jupyter Notebook|
+| 4 | 40 | 5 | 0.559 | 54.364 | No restart Jupyter Notebook|
+| 5 | 50 | 5 | 0.237 | 54.467 | Restart Jupyter Notebook|
+| 6 | 60 | 5 | 0.211 | 54.412 | Restart Jupyter Notebook|
+
+Test Results (Learning rate is 0.00001)
+  
+| Iteration | Epochs | Batch_size | Loss | Time/Epoch (Sec) | Comments | 
+|:----------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| 1 | 10 | 5 | 0.146 | 54.313 | Restart Jupyter Notebook|
+| 2 | 20 | 5 | 0.071 | 54.182 | Restart Jupyter Notebook|
+| 3 | 30 | 5 | 0.042 | 54.102 | Restart Jupyter Notebook|
+| 4 | 40 | 5 | 0.064 | 54.039 | Restart Jupyter Notebook|
+| 5 | 50 | 5 | 0.027 | 54.017 | Restart Jupyter Notebook|
+| 6 | 60 | 5 | 0.029 | 53.818 | Restart Jupyter Notebook|
+
+Conclusion:  
+Using learning rate 0.00001 has a faster converge speed than 0.000001.  
+## Videos  
+Compare `um` series with training epoch = 10, 30, 60.  
+`um` series with training epoch = 10  
+![um](./images/labeled_images/lr_1e-4_epoch_10_batch_size_5/um.gif)  
+`um` series with training epoch = 30  
+![um](./images/labeled_images/lr_1e-4_epoch_30_batch_size_5/um.gif)  
+`um` series with training epoch = 60  
+![um](./images/labeled_images/lr_1e-4_epoch_60_batch_size_5/um.gif)  
+---
+Compare `umm` series with training epoch = 10, 30, 60.  
+`umm` series with training epoch = 10  
+![umm](./images/labeled_images/lr_1e-4_epoch_10_batch_size_5/umm.gif)  
+`umm` series with training epoch = 30  
+![umm](./images/labeled_images/lr_1e-4_epoch_30_batch_size_5/umm.gif)  
+`umm` series with training epoch = 60  
+![umm](./images/labeled_images/lr_1e-4_epoch_60_batch_size_5/umm.gif)
+---
+Compare `uu` series with training epoch = 10, 30, 60.  
+`uu` series with training epoch = 10  
+![uu](./images/labeled_images/lr_1e-4_epoch_10_batch_size_5/uu.gif)  
+`uu` series with training epoch = 30  
+![uu](./images/labeled_images/lr_1e-4_epoch_30_batch_size_5/uu.gif)  
+`uu` series with training epoch = 60  
+![uu](./images/labeled_images/lr_1e-4_epoch_60_batch_size_5/uu.gif)  
+
+Conclusion:  
+Higher training epochs can provide better image classification result, epoch = 50 is good enough for this project according to the test result.
